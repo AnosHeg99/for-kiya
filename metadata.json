@@ -1,0 +1,6 @@
+{
+  "name": "Komorebi: Golden Hour Reverie",
+  "description": "An ethereal soft sky-blue anime sanctuary with dynamic CGI-grade transitions, interactive 3D memory card stacks, customizable magical gifts, and WhatsApp reply flight.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
