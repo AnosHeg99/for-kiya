@@ -5,13 +5,13 @@
  */
 
 // 1. IMAGE ASSETS
-import identitas from '../assets/images/1.png';
+import identitas from '../assets/images/Identitas.png';
 import goldenHourAnimeGirl from '../assets/images/sword.png';
 import goldenHourSky from '../assets/images/wistoria.jpg';
 import goldenWaxSealedLetter from '../assets/images/LawOfIdentityDKDAct5.png';
-import destruction from '../assets/images/2.jpg';
-import kiyameongkawaii from '../assets/images/3.png';
-import rimuru from '../assets/images/4.png';
+import destruction from '../assets/images/Anos.jpg';
+import kiyameongkawaii from '../assets/images/Will.png';
+import rimuru from '../assets/images/Rimuru.png';
 import magicalSkyGiftBox from '../assets/images/magical_sky_gift_box_1788940999827.jpg';
 import softSkyblueAnimeSky from '../assets/images/wistoria.jpg';
 
