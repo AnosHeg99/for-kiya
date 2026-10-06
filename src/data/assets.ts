@@ -15,7 +15,7 @@ import rimuru from '../assets/images/4.png';
 import magicalSkyGiftBox from '../assets/images/magical_sky_gift_box_1788940999827.jpg';
 import softSkyblueAnimeSky from '../assets/images/wistoria.jpg';
 
-import masterBgmAsset from '../../sounds/Something.mp3';
+import masterBgmAsset from '../../sounds/Invisible_String.mp3';
 
 export const IMAGE_ASSETS = {
   identitas,
