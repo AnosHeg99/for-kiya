@@ -153,10 +153,19 @@ export const ReplyLetterModal: React.FC<ReplyLetterModalProps> = ({
     acousticEngine.playMagicSparkle();
 
     const replyText = message.trim() || 'Arigatou Gozaimasu';
-    const cleanPhone = APP_CONFIG.whatsappNumber.replace(/[^0-9]/g, '');
-    const waUrl = `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(
-      `💌 [Surat Balasan Identitas • ${cfg.name} (${cfg.elementName})]:\n\n"${replyText}"\n\n✦ Terkirim menembus langit`
-    )}`;
+const cleanPhone = APP_CONFIG.whatsappNumber.replace(/[^0-9]/g, '');
+
+const replyLetter = [
+  '✦',
+  '',
+  `“${replyText}”`,
+  '',
+  '蒼穹',
+].join('\n');
+
+const waUrl = `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(
+  replyLetter
+)}`;
 
     setTimeout(() => {
       try {
