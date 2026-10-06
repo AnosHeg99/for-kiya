@@ -189,7 +189,8 @@ export const MASTER_BGM_CONFIG = {
   composer: 'Custom Master Audio Track',
   // Sumber utama berasal dari AUDIO_SOURCES.masterBgm. Isi override di atas hanya bila perlu mengganti URL/sumber runtime.
   customAudioUrl: AUDIO_SOURCES.masterBgm, 
-  volume: 1.0,
+  // Balanced cinematic level: BGM stays present as an atmosphere, while clicks/SFX remain clearly audible.
+  volume: 0.25,
   loop: true,
   fadeInDurationSec: 3.5,
   fadeOutDurationSec: 2.0,
@@ -620,7 +621,7 @@ export const MASTER_SCENES: Record<string, SceneBlueprint> = {
     textContent: {
       heading: 'IDENTITY REWARD',
       subheading: 'KLIK GAMBAR UNTUK MEMBUKA SEGEL',
-      bodySummary: 'Koleksi 4 harta IDENTITAS: Will Elfie, Identitas, Rimuru, Anos',
+      bodySummary: 'Koleksi 4 harta IDENTITAS: Royal Truffle, Sky Macaron, Starlight Praline, Celestial Gem.',
     },
     visualAssets: {
       primaryVisual: IMAGE_ASSETS.magicalSkyGiftBox,
