@@ -13,6 +13,9 @@ import {
  * interaction SFX (chimes, clicks, meows, transitions) without an overt player UI.
  */
 
+const PROCEDURAL_SFX_MASTER_VOLUME = 0.92;
+const CUSTOM_SFX_VOLUME = 0.50;
+
 class AcousticEngine {
   private ctx: AudioContext | null = null;
   private masterGain: GainNode | null = null;
@@ -52,7 +55,7 @@ class AcousticEngine {
 
       this.ctx = new AudioCtx();
       this.masterGain = this.ctx.createGain();
-      this.masterGain.gain.setValueAtTime(0.92, this.ctx.currentTime);
+      this.masterGain.gain.setValueAtTime(PROCEDURAL_SFX_MASTER_VOLUME, this.ctx.currentTime);
       this.masterGain.connect(this.ctx.destination);
 
       // Prepare the supplied BGM immediately so the browser can fetch/cache it before
@@ -98,7 +101,7 @@ class AcousticEngine {
     audio.preload = 'auto';
     audio.autoplay = true;
     audio.loop = MASTER_BGM_CONFIG.loop !== false;
-    audio.volume = Math.max(0, Math.min(1, MASTER_BGM_CONFIG.volume ?? 0.92));
+    audio.volume = CUSTOM_SFX_VOLUME;
     audio.setAttribute('playsinline', '');
     audio.src = url;
 
@@ -152,7 +155,7 @@ class AcousticEngine {
       }
 
       if (this.masterGain) {
-        const targetVol = Math.max(0.2, Math.min(1.0, MASTER_BGM_CONFIG?.volume ?? 0.92));
+        const targetVol = PROCEDURAL_SFX_MASTER_VOLUME;
         this.masterGain.gain.setValueAtTime(targetVol, this.ctx.currentTime);
       }
     }
@@ -188,6 +191,9 @@ class AcousticEngine {
   }
 
   public playChime(intensity = 1.0, noteOffset?: number) {
+    if (!this.isInitialized) {
+      this.activate();
+    }
     if (!this.ctx || !this.masterGain) return;
 
     const now = this.ctx.currentTime;
@@ -222,6 +228,7 @@ class AcousticEngine {
   }
 
   public playKawaiiPop(pitch = 1.0) {
+    if (!this.isInitialized) this.activate();
     if (!this.ctx || !this.masterGain) return;
 
     const now = this.ctx.currentTime;
@@ -244,6 +251,7 @@ class AcousticEngine {
   }
 
   public playSqueak() {
+    if (!this.isInitialized) this.activate();
     if (!this.ctx || !this.masterGain) return;
 
     const now = this.ctx.currentTime;
@@ -266,6 +274,7 @@ class AcousticEngine {
   }
 
   public playMagicSparkle() {
+    if (!this.isInitialized) this.activate();
     if (!this.ctx || !this.masterGain) return;
 
     const freqs = [523.25, 659.25, 783.99, 1046.5, 1318.5];
@@ -288,6 +297,7 @@ class AcousticEngine {
   }
 
   public playTactileClick() {
+    if (!this.isInitialized) this.activate();
     if (!this.ctx || !this.masterGain) return;
 
     const now = this.ctx.currentTime;
@@ -309,6 +319,7 @@ class AcousticEngine {
   }
 
   public playCatMeow(pitch = 1.0) {
+    if (!this.isInitialized) this.activate();
     if (!this.ctx || !this.masterGain) return;
 
     const now = this.ctx.currentTime;
@@ -340,6 +351,7 @@ class AcousticEngine {
   }
 
   public playCatChirp() {
+    if (!this.isInitialized) this.activate();
     if (!this.ctx || !this.masterGain) return;
 
     const now = this.ctx.currentTime;
@@ -369,6 +381,7 @@ class AcousticEngine {
   }
 
   public playFrostCrack() {
+    if (!this.isInitialized) this.activate();
     if (!this.ctx || !this.masterGain) return;
 
     const now = this.ctx.currentTime;
@@ -391,6 +404,7 @@ class AcousticEngine {
   }
 
   public playCatPurr() {
+    if (!this.isInitialized) this.activate();
     if (!this.ctx || !this.masterGain) return;
 
     const now = this.ctx.currentTime;
@@ -413,6 +427,7 @@ class AcousticEngine {
   }
 
   public playWhoosh() {
+    if (!this.isInitialized) this.activate();
     if (!this.ctx || !this.masterGain) return;
 
     const now = this.ctx.currentTime;
@@ -443,6 +458,7 @@ class AcousticEngine {
   }
 
   public playDimensionalShatter() {
+    if (!this.isInitialized) this.activate();
     if (!this.ctx || !this.masterGain) return;
 
     const now = this.ctx.currentTime;
@@ -487,6 +503,7 @@ class AcousticEngine {
   }
 
   public playCrystallineShatter() {
+    if (!this.isInitialized) this.activate();
     if (!this.ctx || !this.masterGain) return;
 
     const freqs = [1046.5, 1318.5, 1567.98, 2093.0];
@@ -516,7 +533,7 @@ class AcousticEngine {
       const audio = new Audio();
       audio.preload = 'auto';
       audio.setAttribute('playsinline', '');
-      audio.volume = Math.max(0, Math.min(1, MASTER_BGM_CONFIG.volume ?? 0.92));
+      audio.volume = CUSTOM_SFX_VOLUME;
 
       const cleanup = () => {
         this.activeEffectAudios.delete(audio);
@@ -640,6 +657,8 @@ class AcousticEngine {
   }
 
   public playSceneClick(sceneId: string) {
+    if (!this.isInitialized) this.activate();
+
     const config = SCENE_CLICK_REGISTRY[sceneId] || SCENE_CLICK_REGISTRY.opening;
     if (config.customAudioUrl) {
       void this.playCustomAudio(config.customAudioUrl).then((played) => {
@@ -652,6 +671,7 @@ class AcousticEngine {
   }
 
   public playMagicalGiftOpen() {
+    if (!this.isInitialized) this.activate();
     if (SPECIAL_SFX_REGISTRY.giftOpenMagical.customAudioUrl) {
       void this.playCustomAudio(SPECIAL_SFX_REGISTRY.giftOpenMagical.customAudioUrl).then((played) => {
         if (played || !this.ctx || !this.masterGain) return;
@@ -713,6 +733,7 @@ class AcousticEngine {
   }
 
   public playAscensionSend() {
+    if (!this.isInitialized) this.activate();
     if (SPECIAL_SFX_REGISTRY.replySendAscension.customAudioUrl) {
       void this.playCustomAudio(SPECIAL_SFX_REGISTRY.replySendAscension.customAudioUrl).then((played) => {
         if (played || !this.ctx || !this.masterGain) return;
@@ -776,6 +797,7 @@ class AcousticEngine {
   }
 
   public playHoshinekoVoice(situation = 'greeting') {
+    if (!this.isInitialized) this.activate();
     const voiceSlot = HOSHINEKO_VOICE_REGISTRY[situation] || HOSHINEKO_VOICE_REGISTRY.greeting;
     if (voiceSlot.customAudioUrl) {
       void this.playCustomAudio(voiceSlot.customAudioUrl).then((played) => {
@@ -879,9 +901,15 @@ class AcousticEngine {
   }
 
   public ensureBgmPlaying() {
-    // This path is intentionally safe to call from React effects/visibility handlers.
-    // It never creates or resumes an AudioContext, so Chrome does not warn before a gesture.
-    // The supplied/custom BGM itself remains an ordinary HTMLAudioElement.
+    if (!this.isInitialized) {
+      this.init();
+    }
+
+    if (this.ctx?.state === 'suspended') {
+      void this.ctx.resume().catch(() => {});
+    }
+
+    // Always retry the supplied track. There is intentionally no procedural fallback.
     void this.startConfiguredBgm();
   }
 
