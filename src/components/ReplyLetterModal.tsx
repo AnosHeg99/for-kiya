@@ -155,16 +155,30 @@ export const ReplyLetterModal: React.FC<ReplyLetterModalProps> = ({
     const replyText = message.trim() || 'Arigatou Gozaimasu';
 const cleanPhone = APP_CONFIG.whatsappNumber.replace(/[^0-9]/g, '');
 
-const replyLetter = [
-  '┌',
-  `  “ ${safeText} ”`,
-  '└',
-  '',
-  '✦ キアリア',
-].join('\n');
-  const waUrl = `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(replyLetter)}`;
+const formattedReply = replyText
+  .split(/\r?\n/)
+  .map((line, index, lines) => {
+    if (lines.length === 1) {
+      return `┌  “${line}”`;
+    }
 
+    if (index === 0) {
+      return `┌  “${line}`;
+    }
 
+    if (index === lines.length - 1) {
+      return `   ${line}”`;
+    }
+
+    return `   ${line}`;
+  })
+  .join('\n');
+
+const replyLetter = `${formattedReply}\n└\n✦ キアリア`;
+
+const waUrl = `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(
+  replyLetter
+)}`;
     setTimeout(() => {
       try {
         window.open(waUrl, '_blank');
