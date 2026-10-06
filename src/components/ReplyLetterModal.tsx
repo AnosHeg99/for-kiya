@@ -144,58 +144,62 @@ export const ReplyLetterModal: React.FC<ReplyLetterModalProps> = ({
     }, 650);
   };
 
-  const handleSend = () => {
-    if (isSending) return;
-    setIsSending(true);
-    acousticEngine.ensureBgmPlaying();
-    acousticEngine.playSceneClick('reply');
-    acousticEngine.playAscensionSend(); // Natural dimensional starlight soaring whoosh & chord
-    acousticEngine.playMagicSparkle();
+ const handleSend = () => {
+  if (isSending) return;
 
-    const replyText = message.trim() || 'Arigatou Gozaimasu';
-const cleanPhone = APP_CONFIG.whatsappNumber.replace(/[^0-9]/g, '');
+  setIsSending(true);
 
-const replyLetter = [
-  '┌  “' + replyText + '”',
-  '└',
-  '✦ キアリア',
-].join('\n');
+  acousticEngine.ensureBgmPlaying();
+  acousticEngine.playSceneClick('reply');
+  acousticEngine.playAscensionSend();
+  acousticEngine.playMagicSparkle();
 
-const waUrl = `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(
-  replyLetter
-)}`;
+  const replyText = message.trim() || 'Arigatou Gozaimasu';
+  const cleanPhone = APP_CONFIG.whatsappNumber.replace(/[^0-9]/g, '');
 
-// Open the tab synchronously from the user's click so browsers do not block it.
-const whatsappWindow = window.open('about:blank', '_blank');
+  // Reply letter: only the user's own message is wrapped.
+  const replyLetter = [
+    `┌  “${replyText}”`,
+    '└',
+    '✦ キアリア',
+  ].join('\n');
 
-if (whatsappWindow) {
-  try {
-    whatsappWindow.opener = null;
-  } catch {
-    // Ignore cross-browser opener restrictions.
-  }
-}
+  const waUrl = `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(
+    replyLetter
+  )}`;
 
-setTimeout(() => {
-  try {
-    if (whatsappWindow && !whatsappWindow.closed) {
-      whatsappWindow.location.href = waUrl;
-    } else {
-      window.location.href = waUrl;
+  // Open immediately from the user's click so the browser does not block the tab.
+  const whatsappWindow = window.open('about:blank', '_blank');
+
+  if (whatsappWindow) {
+    try {
+      whatsappWindow.opener = null;
+    } catch {
+      // Ignore browser-specific opener restrictions.
     }
-  } catch {
-    window.location.href = waUrl;
   }
-
-  // Confirmation chime when message takes flight
-  acousticEngine.playChime(1.9, 10);
-  acousticEngine.playHoshinekoVoice('happy');
 
   setTimeout(() => {
-    onSendComplete();
-    setIsSending(false);
-  }, 700);
-}, 1200);
+    try {
+      if (whatsappWindow && !whatsappWindow.closed) {
+        whatsappWindow.location.href = waUrl;
+      } else {
+        window.location.href = waUrl;
+      }
+    } catch {
+      window.location.href = waUrl;
+    }
+
+    // Confirmation chime when message takes flight
+    acousticEngine.playChime(1.9, 10);
+    acousticEngine.playHoshinekoVoice('happy');
+
+    setTimeout(() => {
+      onSendComplete();
+      setIsSending(false);
+    }, 700);
+  }, 1200);
+};
 
   return (
     <div
