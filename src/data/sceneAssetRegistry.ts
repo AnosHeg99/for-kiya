@@ -190,7 +190,7 @@ export const MASTER_BGM_CONFIG = {
   // Sumber utama berasal dari AUDIO_SOURCES.masterBgm. Isi override di atas hanya bila perlu mengganti URL/sumber runtime.
   customAudioUrl: AUDIO_SOURCES.masterBgm, 
   // Balanced cinematic level: BGM stays present as an atmosphere, while clicks/SFX remain clearly audible.
-  volume: 0.25,
+  volume: 0.30,
   loop: true,
   fadeInDurationSec: 3.5,
   fadeOutDurationSec: 2.0,
@@ -465,7 +465,7 @@ export const MASTER_SCENES: Record<string, SceneBlueprint> = {
     },
     bgMusic: {
       trackKey: MASTER_BGM_CONFIG.id,
-      volumeBalance: 0.88,
+      volumeBalance: 0.90,
       harmonicPadMode: 'luminous',
     },
     typography: {
