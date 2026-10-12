@@ -29,7 +29,7 @@ const GIFTS_DATA: InteractiveGift[] = [
     id: 'Serfort',
     name: 'Tsue to Tsurugi no Wistoria',
     jpName: '杖と剣のウィストリア',
-    filename: 'Will.png',
+    filename: 'Will_Serfort.png',
     type: 'ice',
     image: IMAGE_ASSETS.kiyameongkawaii,
     accent: '#f43f5e',
