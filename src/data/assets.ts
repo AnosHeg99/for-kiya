@@ -10,7 +10,7 @@ import goldenHourAnimeGirl from '../assets/images/sword.png';
 import goldenHourSky from '../assets/images/wistoria.jpg';
 import goldenWaxSealedLetter from '../assets/images/LawOfIdentityDKDAct5.png';
 import destruction from '../assets/images/Anos.jpg';
-import kiyameongkawaii from '../assets/images/Will.png';
+import kiyameongkawaii from '../assets/images/Will_Serfort.png';
 import rimuru from '../assets/images/Rimuru.png';
 import magicalSkyGiftBox from '../assets/images/magical_sky_gift_box_1788940999827.jpg';
 import softSkyblueAnimeSky from '../assets/images/wistoria.jpg';
